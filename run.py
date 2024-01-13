@@ -22,7 +22,23 @@ def request_sales_data():
     print("Example: 11, 32, 24, 43, 33, 45, 10\n")
 
     input_data = input("Enter your data here: ")
-    print(f"The data provided is {input_data}")
+    
+    sales_data = input_data.split(",")
+    data_confirmation(sales_data)
+
+def data_confirmation(values):
+    """
+    In the try, all string values are converted into integer.
+    also raises ValueError if string cannot be converted to integer
+    or if they are not exactly 7 values.
+    """
+    try:
+        if len(values) != 7:
+            raise ValueError(
+                f"exactly 7 values is expected, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"wrong data: {e}, please try again.\n")
 
 request_sales_data()
 
