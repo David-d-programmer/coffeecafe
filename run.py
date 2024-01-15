@@ -14,7 +14,7 @@ SHEET = GSPREAD_CLIENT.open('coffee_cafe')
 
 def request_sales_data():
     """
-    request sales data input from the user
+    Request sales data input from the user
     """
     while True:
         print("Please enter sales data from the last market")
@@ -28,7 +28,7 @@ def request_sales_data():
             print("data is accepted and confirmed!")
             break
 
-    return input_data
+    return sales_data
 
 def data_confirmation(values):
     """
@@ -47,7 +47,18 @@ def data_confirmation(values):
         return False
 
     return True
+
+def update_sales_worksheet(data):
+    """
+    Updating sales worksheet in the new role with the data provided
+    """
+    print("Sales worksheet updating...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully.\n")
     
 data = request_sales_data()
+sales_data = [int(numbers) for numbers in data]
+update_sales_worksheet(sales_data)
 
 
