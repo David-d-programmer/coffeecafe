@@ -16,15 +16,19 @@ def request_sales_data():
     """
     request sales data input from the user
     """
+    while True:
+        print("Please enter sales data from the last market")
+        print("Data should be seven numbers, separated by commas")
+        print("Example: 11, 32, 24, 43, 33, 45, 10\n")
 
-    print("Please enter sales data from the last market")
-    print("Data should be seven numbers, separated by commas")
-    print("Example: 11, 32, 24, 43, 33, 45, 10\n")
+        input_data = input("Enter your data here: ")
+        
+        sales_data = input_data.split(",")
+        if data_confirmation(sales_data):
+            print("data is accepted and confirmed!")
+            break
 
-    input_data = input("Enter your data here: ")
-    
-    sales_data = input_data.split(",")
-    data_confirmation(sales_data)
+    return input_data
 
 def data_confirmation(values):
     """
@@ -40,7 +44,10 @@ def data_confirmation(values):
             )
     except ValueError as e:
         print(f"wrong data: {e}, please try again.\n")
+        return False
 
-request_sales_data()
+    return True
+    
+data = request_sales_data()
 
 
