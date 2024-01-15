@@ -56,9 +56,28 @@ def update_sales_worksheet(data):
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
-    
-data = request_sales_data()
-sales_data = [int(numbers) for numbers in data]
-update_sales_worksheet(sales_data)
 
+
+def calculate_profit(sales_row):
+    """
+    Here we are comparing the cost with the sales of each kind of coffee 
+    Profit here will be the difference between the sales and the cost
+    (Profit = S.L - C.P)
+    The negative numbers will mean a loss for that particular cofee
+    """
+    print("Calculating the profit data...\n")
+    cost = SHEET.worksheet("cost").get_all_values()
+    cost_row = cost[-1]
+    print(cost_row)
+
+def main():
+    """
+    All program functions runs here
+    """
+    data = request_sales_data()
+    sales_data = [int(numbers) for numbers in data]
+    update_sales_worksheet(sales_data)
+    calculate_profit(sales_data)
+
+main()
 
