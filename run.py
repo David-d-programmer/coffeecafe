@@ -33,6 +33,7 @@ def data_confirmation(values):
     or if they are not exactly 7 values.
     """
     try:
+        [int(value) for value in values]
         if len(values) != 7:
             raise ValueError(
                 f"exactly 7 values is expected, you provided {len(values)}"
