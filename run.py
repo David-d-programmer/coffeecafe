@@ -93,7 +93,7 @@ def update_cost_worksheet(data):
     print("cost worksheet updating...\n")
     cost_worksheet = SHEET.worksheet("cost")
     cost_worksheet.append_row(data)
-    print("cost worksheet updated successfully")
+    print("cost worksheet updated successfully\n")
 
 def calculate_profit(sales_data, cost_data):
     """
@@ -102,9 +102,18 @@ def calculate_profit(sales_data, cost_data):
     (Profit = S.L - C.P)
     The negative numbers will mean a loss for that particular cofee
     """
-    profit_data = [sales_data[i] - cost_data[i] for i in range(len(sales_data))]
+    profit_data = [int(sales_data[i]) - int(cost_data[i]) for i in range(len(sales_data))]
     
     return profit_data
+
+def update_profit_worksheet(profit_data):
+    """
+    Update profit worksheet by adding new row with the profit calculated
+    """
+    print("profit worksheet updating...\n")
+    update_profit_worksheet = SHEET.worksheet("profit")
+    update_profit_worksheet.append_row(profit_data)
+    print("profit worksheet updated successfully")
 
 def print_profit_data(profit_data):
     # print(profit_data)
