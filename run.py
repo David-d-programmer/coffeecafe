@@ -95,6 +95,7 @@ def update_cost_worksheet(data):
     cost_worksheet.append_row(data)
     print("cost worksheet updated successfully\n")
 
+
 def calculate_profit(sales_data, cost_data):
     """
     Here we are comparing the cost with the sales of each kind of coffee 
@@ -113,7 +114,8 @@ def update_profit_worksheet(profit_data):
     print("profit worksheet updating...\n")
     update_profit_worksheet = SHEET.worksheet("profit")
     update_profit_worksheet.append_row(profit_data)
-    print("profit worksheet updated successfully")
+    print("profit worksheet updated successfully\n")
+    print("Now let's see the profit list: \n")
 
 def print_profit_data(profit_data):
     # print(profit_data)
@@ -123,6 +125,11 @@ def print_profit_data(profit_data):
                 "You are making profit of $%s by selling %s"
                 % (profit, COFFEE_LIST[index])
             )
+        elif profit >= 0:
+            print(
+                 "You are making  no profit: what you get is $%s by selling %s"
+                % (profit, COFFEE_LIST[index])
+            )
         else:
             print(
                 "You are making loss of $%s by selling %s"
@@ -130,8 +137,17 @@ def print_profit_data(profit_data):
             )
 
 
+def getting_last_7_entries_sales():
+    sales = SHEET.worksheet("sales")
+    #column = sales.col_values(3)
+    #print(column)
 
+    columns = []
+    for num in range (1, 8):
+        column = sales.col_values(num)
+        columns.append(column[-7:])
 
+    print(columns)
 
 def main():
     """
@@ -147,17 +163,20 @@ def main():
     update_profit_worksheet(profit_data)
 
     print_profit_data(profit_data)
+    
+    
+    
 
-    # Total sales figure for last 7 days, 30 days, custom
-
-    input("Enter the no. of days for which you want to see the data")
+    input("Enter the no. of days for which you want to see the data: ")
     input("What data you need? sales/cost/profit?")
+
+    
 
 
 if __name__ == "__main__":
-    main()
+    #main()
 
-
+    sales_columns = getting_last_7_entries_sales()
 
 
 
