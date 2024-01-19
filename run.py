@@ -138,16 +138,19 @@ def print_profit_data(profit_data):
 
 
 def getting_last_7_entries_sales():
+    """
+    Getting sales data for the last seven days
+    """
+    print("data on last 7 days of sales_data...\n")
     sales = SHEET.worksheet("sales")
-    #column = sales.col_values(3)
-    #print(column)
 
     columns = []
     for num in range (1, 8):
         column = sales.col_values(num)
         columns.append(column[-7:])
 
-    print(columns)
+    return columns
+
 
 def main():
     """
@@ -163,20 +166,22 @@ def main():
     update_profit_worksheet(profit_data)
 
     print_profit_data(profit_data)
+    sales_columns = getting_last_7_entries_sales()
+    print(sales_columns)
     
     
     
 
-    input("Enter the no. of days for which you want to see the data: ")
-    input("What data you need? sales/cost/profit?")
+    #input("Enter the no. of days for which you want to see the data: ")
+    #input("What data you need? sales/cost/profit?")
 
     
 
 
 if __name__ == "__main__":
-    #main()
+    main()
 
-    sales_columns = getting_last_7_entries_sales()
+    
 
 
 
