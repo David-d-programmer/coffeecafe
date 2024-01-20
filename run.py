@@ -85,14 +85,14 @@ def data_confirmation(values):
     return True
 
 
-def update_worksheet(data, worksheet, profit_data):
+def update_worksheet(data, worksheet):
     """
     Accepts the list of data to  be updated in the worksheet
     updates the worksheet with the data provided.
     """
     print(f"cost {worksheet} worksheet updating...\n")
     worksheet_to_update = SHEET.worksheet(worksheet)
-    worksheet_to_update.append_row(data, profit_data)
+    worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated successfully\n")
 
 def calculate_profit(sales_data, cost_data):
@@ -169,11 +169,14 @@ def get_todays_data():
     sales_data = request_sales_data()
     cost_data = request_cost_data()
 
-    update_worksheet(sales_data, "sales")
-    update_worksheet(cost_data, "cost")
-
     profit_data = calculate_profit(sales_data, cost_data)
     update_worksheet(profit_data, "profit")
+    
+    update_worksheet(sales_data, "sales")
+    update_worksheet(cost_data, "cost")
+    
+
+    
 
     print_profit_data(profit_data)
 
