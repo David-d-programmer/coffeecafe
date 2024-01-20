@@ -1,58 +1,65 @@
+import sys
 import gspread
 from google.oauth2.service_account import Credentials
+from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
+    "https://www.googleapis.com/auth/drive",
+]
 
-CREDS = Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('coffee_cafe')
+SHEET = GSPREAD_CLIENT.open("coffee_cafe")
 
-COFFEE_LIST = ["Latte", "Americano", "Espresso", "Mocha", "Flat white", "Cappuccino", "Piccolo"]
+COFFEE_LIST = [
+    "Latte",
+    "Americano",
+    "Espresso",
+    "Mocha",
+    "Flat white",
+    "Cappuccino",
+    "Piccolo",
+]
+
 
 def request_sales_data():
     """
     Request sales data input from the user
     """
     while True:
-        print("Please enter your sales for today")
+        print("Please! enter your sales for today")
 
-        print("Example: 11, 32, 24, 43, 33, 45, 10\n")
+        print("Example: latte 20")
 
-       
         input_data = []
         for coffee in COFFEE_LIST:
-            coffee_sale = input("Enter sale value for today %s: " % coffee)
+            coffee_sale = input("Enter sales value for today %s: " % coffee)
             input_data.append(coffee_sale)
 
-        
-        
         if data_confirmation(input_data):
             print("data is accepted and confirmed!")
             break
 
     return input_data
 
+
 def request_cost_data():
     """
     Request cost data input from the user
     """
     while True:
-        print("Please enter your cost")
-        print("Example: 11, 32, 24, 43, 33, 45, 10\n")
+        print("Please! enter your cost for today")
+        
+        print("Example: latte 20")
 
-       
         input_data = []
         for coffee in COFFEE_LIST:
             coffee_cost = input("Enter cost value for today %s: " % coffee)
             input_data.append(coffee_cost)
 
-        
-        
         if data_confirmation(input_data):
             print("data is accepted and confirmed!")
             break
@@ -62,7 +69,7 @@ def request_cost_data():
 
 def data_confirmation(values):
     """
-    Here the length of the value imputed by the user should be thesame as the length of the 
+    Here the length of the value imputed by the user should be thesame as the length of the
     coffee list, if not it will raise ValueError and give opportunity to try again.
     """
     try:
@@ -76,7 +83,8 @@ def data_confirmation(values):
         return False
 
     return True
-    
+
+
 def update_sales_worksheet(data):
     """
     Update sales worksheet by adding new row with the data provided
@@ -85,6 +93,7 @@ def update_sales_worksheet(data):
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
     print("sales worksheet updated successfully")
+
 
 def update_cost_worksheet(data):
     """
@@ -98,14 +107,17 @@ def update_cost_worksheet(data):
 
 def calculate_profit(sales_data, cost_data):
     """
-    Here we are comparing the cost with the sales of each kind of coffee 
+    Here we are comparing the cost with the sales of each kind of coffee
     Profit here will be the difference between the sales and the cost
     (Profit = S.L - C.P)
     The negative numbers will mean a loss for that particular cofee
     """
-    profit_data = [int(sales_data[i]) - int(cost_data[i]) for i in range(len(sales_data))]
-    
+    profit_data = [
+        int(sales_data[i]) - int(cost_data[i]) for i in range(len(sales_data))
+    ]
+
     return profit_data
+
 
 def update_profit_worksheet(profit_data):
     """
@@ -117,8 +129,8 @@ def update_profit_worksheet(profit_data):
     print("profit worksheet updated successfully\n")
     print("Now let's see the profit list: \n")
 
+
 def print_profit_data(profit_data):
-    # print(profit_data)
     for index, profit in enumerate(profit_data):
         if profit > 0:
             print(
@@ -127,7 +139,7 @@ def print_profit_data(profit_data):
             )
         elif profit >= 0:
             print(
-                 "You are making  no profit: what you get is $%s by selling %s"
+                "You are making  no profit: what you get is $%s by selling %s"
                 % (profit, COFFEE_LIST[index])
             )
         else:
@@ -137,28 +149,44 @@ def print_profit_data(profit_data):
             )
 
 
-def getting_last_7_entries_sales():
+def display_past_data(no_of_days):
     """
-    Getting sales data for the last seven days
+    Getting sales data for the past given no of days.
     """
-    print("data on last 7 days of sales_data...\n")
+    print(f"data on last {no_of_days} days of sales_data...\n")
     sales = SHEET.worksheet("sales")
+    cost = SHEET.worksheet("cost")
+    profit = SHEET.worksheet("profit")
 
-    columns = []
-    for num in range (1, 8):
-        column = sales.col_values(num)
-        columns.append(column[-7:])
+    sales_data = sales.get_all_values()[1:]
+    cost_data = cost.get_all_values()[1:]
+    profit_data = profit.get_all_values()[1:]
 
-    return columns
+    no_of_days_in_sheet = len(sales_data)
+    final_no_of_days = (
+        no_of_days if no_of_days < no_of_days_in_sheet else no_of_days_in_sheet
+    )
+    start_index = no_of_days_in_sheet - final_no_of_days
+
+    sales_data = sales_data[start_index:]
+    cost_data = cost_data[start_index:]
+    profit_data = profit_data[start_index:]
+    
+
+    table = []
+    for d in range(final_no_of_days):
+        sales = sales_data[d]
+        cost = cost_data[d]
+        profit = profit_data[d]
+        table.append([f"Day {d+1}"] + sales)
+       
+    print(tabulate(table, headers=COFFEE_LIST))
 
 
-def main():
-    """
-    All program functions runs here
-    """
+def get_todays_data():
     sales_data = request_sales_data()
     cost_data = request_cost_data()
-   
+
     update_sales_worksheet(sales_data)
     update_cost_worksheet(cost_data)
 
@@ -166,22 +194,47 @@ def main():
     update_profit_worksheet(profit_data)
 
     print_profit_data(profit_data)
-    sales_columns = getting_last_7_entries_sales()
-    print(sales_columns)
-    
-    
-    
-
-    #input("Enter the no. of days for which you want to see the data: ")
-    #input("What data you need? sales/cost/profit?")
-
-    
 
 
+_USER_OPTIONS = """
+1. Enter today's sales and cost data.
+2. View last 7 days records
+3. View last 30 days records
+4. Enter custom days to see past data.
+5. Exit
+"""
+
+
+def main():
+    """
+    A loop to always give us the list of options we have.
+    """
+    while True:
+        user_input = input(_USER_OPTIONS)
+
+        if user_input == "1":
+            get_todays_data()
+        elif user_input == "2":
+            display_past_data(no_of_days=7)
+        elif user_input == "3":
+            display_past_data(no_of_days=30)
+        elif user_input == "4":
+            no_of_days = input(
+                "Enter no. of days for which you want to see the data:"
+            )
+
+            invalid = True
+            while invalid:
+                try:
+                    no_of_days = int(no_of_days)
+                    invalid = False
+                except ValueError:
+                    print("Invalid input.. Please try again..")
+
+            display_past_data(no_of_days=no_of_days)
+        elif user_input == "5":
+            sys.exit()
+
+    
 if __name__ == "__main__":
     main()
-
-    
-
-
-
