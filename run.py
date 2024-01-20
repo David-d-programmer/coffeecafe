@@ -53,7 +53,7 @@ def request_cost_data():
     while True:
         print("Please! enter your cost for today")
         
-        print("Example: latte 20")
+        print("Example: americano 60")
 
         input_data = []
         for coffee in COFFEE_LIST:
@@ -85,25 +85,15 @@ def data_confirmation(values):
     return True
 
 
-def update_sales_worksheet(data):
+def update_worksheet(data, worksheet, profit_data):
     """
-    Update sales worksheet by adding new row with the data provided
+    Accepts the list of data to  be updated in the worksheet
+    updates the worksheet with the data provided.
     """
-    print("sales worksheet updating...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("sales worksheet updated successfully")
-
-
-def update_cost_worksheet(data):
-    """
-    Update cost worksheet by adding new row with the data provided
-    """
-    print("cost worksheet updating...\n")
-    cost_worksheet = SHEET.worksheet("cost")
-    cost_worksheet.append_row(data)
-    print("cost worksheet updated successfully\n")
-
+    print(f"cost {worksheet} worksheet updating...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data, profit_data)
+    print(f"{worksheet} worksheet updated successfully\n")
 
 def calculate_profit(sales_data, cost_data):
     """
@@ -117,17 +107,6 @@ def calculate_profit(sales_data, cost_data):
     ]
 
     return profit_data
-
-
-def update_profit_worksheet(profit_data):
-    """
-    Update profit worksheet by adding new row with the profit calculated
-    """
-    print("profit worksheet updating...\n")
-    update_profit_worksheet = SHEET.worksheet("profit")
-    update_profit_worksheet.append_row(profit_data)
-    print("profit worksheet updated successfully\n")
-    print("Now let's see the profit list: \n")
 
 
 def print_profit_data(profit_data):
@@ -184,14 +163,17 @@ def display_past_data(no_of_days):
 
 
 def get_todays_data():
+    """
+    where all our function runs!
+    """
     sales_data = request_sales_data()
     cost_data = request_cost_data()
 
-    update_sales_worksheet(sales_data)
-    update_cost_worksheet(cost_data)
+    update_worksheet(sales_data, "sales")
+    update_worksheet(cost_data, "cost")
 
     profit_data = calculate_profit(sales_data, cost_data)
-    update_profit_worksheet(profit_data)
+    update_worksheet(profit_data, "profit")
 
     print_profit_data(profit_data)
 
