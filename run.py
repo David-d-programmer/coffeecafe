@@ -79,7 +79,7 @@ def data_confirmation(values):
                 f"length of the coffee list is expected, you provided {len(values)}"
             )
     except ValueError as e:
-        print(f"wrong data: {e}, please try again.\n")
+        print(f"wrong data: please try again.\n")
         return False
 
     return True
