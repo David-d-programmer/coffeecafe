@@ -10,7 +10,7 @@ The cafe owner can decide to streamline his available product for sale to just 5
 
 This project was inspired after concluding on my rock, paper and scissors project, so I discovered that if it’s in the real world; guessing is not the best choice.
 
-![Responsice Mockup](coffe-cafe.png)
+![Responsice Mockup](coffee-cafe.png)
 
 
 ## Features
@@ -23,7 +23,7 @@ The features include: 1, which means to enter today's sales and cost data
                       4, which means to enter custom days to see past data.
 All of this sections makes the app more realistic because it gives the user more options to look at.
 
-![Responsice Mockup](coffecafe2.png)
+![Responsice Mockup](coffee-cafe2.png)
 
 
 ### Storage data
@@ -32,7 +32,7 @@ All of this sections makes the app more realistic because it gives the user more
 
 - __The coffeecafe google sheet__
 
-![Responsice Mockup](coffecafe.png)
+![Responsice Mockup](coffeecafe.png)
  Here shows the list of sales, cost and surplus that are updated to the worksheet
  
 - __Languages and Package Used__
