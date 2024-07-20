@@ -10,7 +10,7 @@ The cafe owner can decide to streamline his available product for sale to just 5
 
 This project was inspired after concluding on my rock, paper and scissors project, so I discovered that if it’s in the real world; guessing is not the best choice.
 
-![Responsice Mockup](coffee-cafe.png)
+![Responsice Mockup](Screenshot 2024-07-20 at 18.38.17.png)
 
 
 ## Features
@@ -48,18 +48,17 @@ All of this sections makes the app more realistic because it gives the user more
   Git: Git was used for version control by utilizing Gitpod terminal
   GitHub: GitHub is used to store the project's code after it's pushed from Git
   Heroku: Used to deploy the live projects
-  PEP8: This is used to validate all python code
   
   
 ## Testing
 
 
-![Responsice Mockup](jshinttest.png)
+![Responsice Mockup](Screenshot 2024-07-20 at 18.42.10)
 
 
 __Lighthouse__
   
-  ![Responsice Mockup](lighthouse.png)
+  ![Responsice Mockup](Screenshot 2024-07-20 at 18.41.27)
   
 ### Validator Testing
 
