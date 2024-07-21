@@ -23,7 +23,7 @@ The features include: 1, which means to enter today's sales and cost data
                       4, which means to enter custom days to see past data.
 All of this sections makes the app more realistic because it gives the user more options to look at.
 
-![Responsice Mockup](coffeecafe.png)
+![Responsice Mockup](coffeecafe3.png)
 
 
 ### Storage data
