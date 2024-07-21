@@ -10,7 +10,7 @@ The cafe owner can decide to streamline his available product for sale to just 5
 
 This project was inspired after concluding on my rock, paper and scissors project, so I discovered that if it’s in the real world; guessing is not the best choice.
 
-![Responsice Mockup](Screenshot 2024-07-20 at 18.38.17.png)
+![Responsice Mockup](coffe-cafe.png)
 
 
 ## Features
@@ -53,12 +53,12 @@ All of this sections makes the app more realistic because it gives the user more
 ## Testing
 
 
-![Responsice Mockup](Screenshot 2024-07-20 at 18.42.10)
+![Responsice Mockup](jshinttest.png)
 
 
 __Lighthouse__
   
-  ![Responsice Mockup](Screenshot 2024-07-20 at 18.41.27)
+  ![Responsice Mockup](lighthouse.png)
   
 ### Validator Testing
 
